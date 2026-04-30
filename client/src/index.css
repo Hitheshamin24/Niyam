@@ -1,0 +1,36 @@
+/* ─── Google Font (MUST BE FIRST) ─────────────────────────────────────── */
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
+
+/* ─── Tailwind ───────────────────────────────────────────────────────── */
+@import "tailwindcss";
+
+/* ─── Custom Theme ───────────────────────────────────────────────────── */
+@theme {
+  --color-primary-50:  #f0f9ff;
+  --color-primary-100: #e0f2fe;
+  --color-primary-500: #0ea5e9;
+  --color-primary-600: #0284c7;
+  --color-primary-700: #0369a1;
+
+  --color-habit-green:  #10b981;
+  --color-habit-orange: #f59e0b;
+  --color-habit-purple: #8b5cf6;
+  --color-habit-pink:   #ec4899;
+  --color-habit-red:    #ef4444;
+
+  --font-family-sans: 'Inter', sans-serif;
+}
+
+/* ─── Base Styles ───────────────────────────────────────────────────── */
+body {
+  font-family: 'Inter', sans-serif;
+  -webkit-font-smoothing: antialiased;
+  background-color: #f8fafc;
+  color: #1e293b;
+}
+
+/* ─── Scrollbar ─────────────────────────────────────────────────────── */
+::-webkit-scrollbar       { width: 6px; }
+::-webkit-scrollbar-track { background: #f1f5f9; }
+::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
+::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
