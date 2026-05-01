@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const errorHandler = require("./middleware/errorMiddlewares");
 
 // create express app
 const app = express();
@@ -17,6 +18,8 @@ app.use(
 app.use(express.json());
 // parse URL-encoded data
 app.use(express.urlencoded({ extended: false }));
+
+app.use(errorHandler)
 
 app.get("/health", (req, res) => {
   res.json({
