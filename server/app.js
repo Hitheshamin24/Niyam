@@ -19,7 +19,7 @@ app.use(express.json());
 // parse URL-encoded data
 app.use(express.urlencoded({ extended: false }));
 
-app.use(errorHandler)
+app.use(errorHandler);
 
 app.get("/health", (req, res) => {
   res.json({
@@ -28,5 +28,8 @@ app.get("/health", (req, res) => {
     timestamp: new Date().toISOString(),
   });
 });
+
+// Routes
+app.use("/api/auth", require("./routes/authRoutes"));
 
 module.exports = app;
