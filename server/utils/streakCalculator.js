@@ -30,8 +30,8 @@ const calculateStreaks = (dates) => {
 
   //   calculate current Streak
   let currentStreak = 0;
-  const today = new Date().toISOString.split("T")[0];
-  const yesterday = new Date(Date.now() - 86400000).toISOString().split(T)[0];
+  const today = new Date().toISOString().split("T")[0];
+  const yesterday = new Date(Date.now() - 86400000).toISOString().split("T")[0];
 
   // streak is active if completed today or yesterday
   const lastDate = uniqueDates[uniqueDates.length - 1];
@@ -43,7 +43,7 @@ const calculateStreaks = (dates) => {
   for (let i = uniqueDates.length - 1; i >= 0; i--) {
     const dateToCheck = checkDate.toISOString().split("T")[0];
 
-    if (uniqueDate[i] === dateToCheck) {
+    if (uniqueDates[i] === dateToCheck) {
       currentStreak++;
       checkDate = new Date(checkDate - 86400000);
     } else {

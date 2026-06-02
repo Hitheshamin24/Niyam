@@ -23,14 +23,14 @@ const protect = async (req, res, next) => {
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
 
     // attach logged-in user to req.user
-    req.user = await User.findById(decode.id);
+    req.user = await User.findById(decoded.id);
     if (!req.user) {
       return res.status(401).json({
         success: false,
         message: "User no longer exists",
       });
-      next();
     }
+    next();
   } catch (err) {
     return res.status(401).json({
       success: false,
