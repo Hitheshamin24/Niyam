@@ -15,7 +15,14 @@ export const analyticsApi = {
         const res = await apiClient.get(`/habits/${habit._id}/stats`);
         return {
           habit,
-          stats: res.stats,
+          stats: res.data?.stats || {
+            currentStreak: 0,
+            longestStreak: 0,
+            completedThisMonth: 0,
+            goalPerMonth: habit.goalPerMonth || 30,
+            progressPercent: 0,
+            totalCompletions: 0,
+          },
         };
       } catch (err) {
         console.error(`Failed to fetch stats for habit ${habit._id}:`, err);

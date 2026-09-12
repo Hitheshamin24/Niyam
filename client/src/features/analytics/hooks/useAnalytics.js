@@ -33,13 +33,13 @@ export const useAnalytics = () => {
     let bestHabit = null;
 
     statsList.forEach(({ habit, stats }) => {
-      totalCompletions += stats.totalCompletions || 0;
-      if (stats.currentStreak > maxCurrentStreak) {
-        maxCurrentStreak = stats.currentStreak;
-        bestHabit = habit.name;
+      totalCompletions += stats?.totalCompletions || 0;
+      if ((stats?.currentStreak || 0) > maxCurrentStreak) {
+        maxCurrentStreak = stats?.currentStreak || 0;
+        bestHabit = habit?.name;
       }
-      if (stats.longestStreak > maxLongestStreak) {
-        maxLongestStreak = stats.longestStreak;
+      if ((stats?.longestStreak || 0) > maxLongestStreak) {
+        maxLongestStreak = stats?.longestStreak || 0;
       }
     });
 
@@ -55,12 +55,12 @@ export const useAnalytics = () => {
   // Chart data: Habit monthly progress
   const habitProgressData = useMemo(() => {
     return statsList.map(({ habit, stats }) => ({
-      name: habit.name.length > 12 ? habit.name.substring(0, 12) + '...' : habit.name,
-      fullName: habit.name,
-      completed: stats.completedThisMonth || 0,
-      goal: stats.goalPerMonth || 30,
-      percent: stats.progressPercent || 0,
-      color: habit.color || '#10b981',
+      name: habit?.name?.length > 12 ? habit.name.substring(0, 12) + '...' : (habit?.name || ''),
+      fullName: habit?.name || '',
+      completed: stats?.completedThisMonth || 0,
+      goal: stats?.goalPerMonth || 30,
+      percent: stats?.progressPercent || 0,
+      color: habit?.color || '#10b981',
     }));
   }, [statsList]);
 

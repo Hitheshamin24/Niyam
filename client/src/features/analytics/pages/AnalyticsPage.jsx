@@ -501,18 +501,18 @@ export default function AnalyticsPage() {
                       {habit.frequency}
                     </td>
                     <td className="py-3.5 px-4 font-bold text-amber-600 text-[13px]">
-                      🔥 {stats.currentStreak} d
+                      🔥 {stats?.currentStreak || 0} d
                     </td>
                     <td className="py-3.5 px-4">
                       <div className="flex items-center gap-2 max-w-[160px]">
                         <div className="w-full bg-surface-container h-2 rounded-full overflow-hidden">
                           <div
                             className="bg-primary h-full rounded-full transition-all duration-500"
-                            style={{ width: `${stats.progressPercent || 0}%` }}
+                            style={{ width: `${stats?.progressPercent || 0}%` }}
                           />
                         </div>
                         <span className="text-[11px] text-secondary font-medium">
-                          {stats.progressPercent || 0}%
+                          {stats?.progressPercent || 0}%
                         </span>
                       </div>
                     </td>
