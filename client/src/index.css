@@ -1,36 +1,86 @@
-/* ─── Google Font (MUST BE FIRST) ─────────────────────────────────────── */
-@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&display=swap');
-
-/* ─── Tailwind ───────────────────────────────────────────────────────── */
 @import "tailwindcss";
 
-/* ─── Custom Theme ───────────────────────────────────────────────────── */
 @theme {
-  --color-primary-50:  #f0f9ff;
-  --color-primary-100: #e0f2fe;
-  --color-primary-500: #0ea5e9;
-  --color-primary-600: #0284c7;
-  --color-primary-700: #0369a1;
+  --color-primary: #00652c;
+  --color-primary-container: #15803d;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #d3ffd5;
+  --color-primary-fixed: #95f8a7;
+  --color-primary-fixed-dim: #79db8d;
 
-  --color-habit-green:  #10b981;
-  --color-habit-orange: #f59e0b;
-  --color-habit-purple: #8b5cf6;
-  --color-habit-pink:   #ec4899;
-  --color-habit-red:    #ef4444;
+  --color-surface: #f8f9ff;
+  --color-surface-bright: #f8f9ff;
+  --color-surface-dim: #cbdbf5;
+  --color-surface-variant: #d3e4fe;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-container-low: #eff4ff;
+  --color-surface-container: #e5eeff;
+  --color-surface-container-high: #dce9ff;
+  --color-surface-container-highest: #d3e4fe;
+
+  --color-on-surface: #0b1c30;
+  --color-on-surface-variant: #3f493f;
+
+  --color-secondary: #565e74;
+  --color-secondary-container: #dae2fd;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #5c647a;
+
+  --color-tertiary: #00652b;
+  --color-tertiary-container: #008138;
+  --color-tertiary-fixed: #6bff8f;
+  --color-tertiary-fixed-dim: #4ae176;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #d5ffd5;
+
+  --color-outline: #6f7a6e;
+  --color-outline-variant: #becabc;
+  --color-inverse-surface: #213145;
+  --color-inverse-on-surface: #eaf1ff;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  --spacing-space-xs: 0.25rem;
+  --spacing-space-sm: 0.5rem;
+  --spacing-space-md: 1rem;
+  --spacing-space-lg: 1.5rem;
+  --spacing-space-xl: 2rem;
+  --spacing-space-2xl: 3rem;
 
   --font-family-sans: 'Inter', sans-serif;
 }
 
-/* ─── Base Styles ───────────────────────────────────────────────────── */
 body {
   font-family: 'Inter', sans-serif;
+  background-color: var(--color-surface, #f8f9ff);
+  color: var(--color-on-surface, #0b1c30);
   -webkit-font-smoothing: antialiased;
-  background-color: #f8fafc;
-  color: #1e293b;
 }
 
-/* ─── Scrollbar ─────────────────────────────────────────────────────── */
-::-webkit-scrollbar       { width: 6px; }
-::-webkit-scrollbar-track { background: #f1f5f9; }
-::-webkit-scrollbar-thumb { background: #cbd5e1; border-radius: 3px; }
-::-webkit-scrollbar-thumb:hover { background: #94a3b8; }
+/* Material Symbols Outlined Icon Font */
+.material-symbols-outlined {
+  font-family: 'Material Symbols Outlined';
+  font-weight: normal;
+  font-style: normal;
+  display: inline-block;
+  line-height: 1;
+  text-transform: none;
+  letter-spacing: normal;
+  word-wrap: normal;
+  white-space: nowrap;
+  direction: ltr;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Custom Hide Scrollbar Utility */
+.scrollbar-none::-webkit-scrollbar {
+  display: none;
+}
+.scrollbar-none {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}

@@ -1,26 +1,75 @@
-import { Toaster } from 'react-hot-toast'
+import React from 'react';
+import { BrowserRouter, Routes, Route, Navigate } from 'react-router-dom';
+import { Toaster } from 'react-hot-toast';
+import { AuthProvider } from '@/features/auth/state/AuthContext';
+import { HabitsProvider } from '@/features/habits/state/HabitsContext';
+import ProtectedRoute from '@/components/layout/ProtectedRoute';
+import AppLayout from '@/components/layout/AppLayout';
 
-function App() {
+// Pages
+import LoginPage from '@/features/auth/pages/LoginPage';
+import RegisterPage from '@/features/auth/pages/RegisterPage';
+import DashboardPage from '@/features/dashboard/pages/DashboardPage';
+import HabitsPage from '@/features/habits/pages/HabitsPage';
+import AnalyticsPage from '@/features/analytics/pages/AnalyticsPage';
+
+export default function App() {
   return (
-    <div className="min-h-screen bg-gray-50">
-      <Toaster position="top-right" />
+    <BrowserRouter>
+      <AuthProvider>
+        <Toaster
+          position="top-right"
+          toastOptions={{
+            duration: 3500,
+            style: {
+              background: '#0f172a',
+              color: '#f8fafc',
+              fontSize: '13px',
+              fontWeight: '500',
+              borderRadius: '12px',
+              padding: '12px 16px',
+              boxShadow: '0 10px 15px -3px rgba(0, 0, 0, 0.1)',
+            },
+            success: {
+              iconTheme: {
+                primary: '#10b981',
+                secondary: '#ffffff',
+              },
+            },
+            error: {
+              iconTheme: {
+                primary: '#ef4444',
+                secondary: '#ffffff',
+              },
+            },
+          }}
+        />
 
-      <div className="flex items-center justify-center min-h-screen">
-        <div className="text-center">
-          <div className="text-6xl mb-4">🎯</div>
-          <h1 className="text-4xl font-bold text-gray-800 mb-2">
-            Habit Tracker
-          </h1>
-          <p className="text-gray-500 text-lg mb-6">
-            Your personal habit tracking app
-          </p>
-          <div className="bg-habit-green text-green-700 px-6 py-3 rounded-full inline-block font-medium">
-            Vite + React + Tailwind v4 working!
-          </div>
-        </div>
-      </div>
-    </div>
-  )
+        <Routes>
+          {/* Public Authentication Routes */}
+          <Route path="/login" element={<LoginPage />} />
+          <Route path="/register" element={<RegisterPage />} />
+
+          {/* Protected Application Routes */}
+          <Route element={<ProtectedRoute />}>
+            <Route
+              element={
+                <HabitsProvider>
+                  <AppLayout />
+                </HabitsProvider>
+              }
+            >
+              <Route path="/" element={<Navigate to="/dashboard" replace />} />
+              <Route path="/dashboard" element={<DashboardPage />} />
+              <Route path="/habits" element={<HabitsPage />} />
+              <Route path="/analytics" element={<AnalyticsPage />} />
+            </Route>
+          </Route>
+
+          {/* Fallback */}
+          <Route path="*" element={<Navigate to="/dashboard" replace />} />
+        </Routes>
+      </AuthProvider>
+    </BrowserRouter>
+  );
 }
-
-export default App

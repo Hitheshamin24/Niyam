@@ -1,9 +1,7 @@
 const connectDB = require("./config/db");
 const dotenv = require("dotenv");
 const app = require("./app");
-// load env variable
 dotenv.config();
-// connect to MongoDB
 const startServer = async () => {
   await connectDB();
 
@@ -14,4 +12,3 @@ const startServer = async () => {
   });
 };
 startServer();
- 
