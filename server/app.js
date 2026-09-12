@@ -19,8 +19,7 @@ app.use(express.json());
 // parse URL-encoded data
 app.use(express.urlencoded({ extended: false }));
 
-app.use(errorHandler);
-
+// Health check
 app.get("/health", (req, res) => {
   res.json({
     message: "Niyam API is running",
@@ -31,6 +30,17 @@ app.get("/health", (req, res) => {
 
 // Routes
 app.use("/api/auth", require("./routes/authRoutes"));
-app.use('/api/habits', require('./routes/habits')); 
+app.use("/api/habits", require("./routes/habits"));
+
+// 404 handler for undefined routes
+app.use((req, res) => {
+  res.status(404).json({
+    success: false,
+    message: `Route ${req.originalUrl} not found`,
+  });
+});
+
+// Error handling middleware (must be registered last)
+app.use(errorHandler);
 
 module.exports = app;
