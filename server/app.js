@@ -9,9 +9,10 @@ const app = express();
 
 // middleware
 // allow the react frontend to talk  to this server
+const allowedOrigin = (process.env.CLIENT_API || '').replace(/\/$/, '');
 app.use(
   cors({
-    origin: process.env.CLIENT_API,
+    origin: allowedOrigin,
     credentials: true,
   }),
 );
