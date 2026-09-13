@@ -2,7 +2,7 @@ const express = require("express");
 const cors = require("cors");
 const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorMiddlewares");
-const cors = require("cors");
+
 
 // create express app
 const app = express();
@@ -23,12 +23,7 @@ app.use(express.urlencoded({ extended: false }));
 // parse cookies (needed for the httpOnly refreshToken cookie)
 app.use(cookieParser());
 
-app.use(
-  cors({
-    origin: process.env.CLIENT_API,
-    credentials: true,
-  }),
-);
+
 // Health check
 app.get("/health", (req, res) => {
   res.json({
