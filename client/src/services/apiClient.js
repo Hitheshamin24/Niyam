@@ -2,11 +2,11 @@ import axios from 'axios';
 import { authApi } from '@/features/auth/api/authApi';
 
 const apiClient = axios.create({
-  baseURL: '/api',
+  baseURL: `${import.meta.env.VITE_BACKEND_API}/api`,
   headers: {
     'Content-Type': 'application/json',
   },
-  withCredentials: true, // Send httpOnly refresh cookie automatically
+  withCredentials: true, 
 });
 
 // Request Interceptor: Attach access token from memory/localStorage

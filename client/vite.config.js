@@ -14,13 +14,13 @@ export default defineConfig(({ mode }) => {
         "@": fileURLToPath(new URL("./src", import.meta.url)),
       },
     },
-    server: {
-      proxy: {
-        "/api": {
-          target: env.VITE_BACKEND_API || "http://localhost:3000",
-          changeOrigin: true,
-        },
-      },
-    },
+    // server: {
+    //   proxy: {
+    //     "/api": {
+    //       target: env.VITE_BACKEND_API || "http://localhost:3000",
+    //       changeOrigin: true,
+    //     },
+    //   },
+    // },
   };
 });
