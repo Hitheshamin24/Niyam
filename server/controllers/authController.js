@@ -1,10 +1,23 @@
 const User = require("../models/User");
-const generateToken = require("../utils/generateToken");
+const {
+  generateAccessToken,
+  generateRefreshToken,
+} = require("../utils/generateToken");
 const { validationResult } = require("express-validator");
+const jwt = require("jsonwebtoken");
 
-// Register-------
-// Route:POST/api/auth/register
-// Access:Public
+const setRefreshCookie = (res, refreshToken) => {
+  res.cookie("refreshToken", refreshToken, {
+    httpOnly: true, 
+    secure: process.env.NODE_ENV === "production", 
+    sameSite: "strict",
+    maxAge: 7 * 24 * 60 * 60 * 1000,
+  });
+};
+
+// Register
+// Route: POST /api/auth/register
+// Access: Public
 const register = async (req, res) => {
   // check for validation errors
   const errors = validationResult(req);
@@ -20,18 +33,22 @@ const register = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: "An account with this email is already exists",
+        message: "An account with this email already exists",
       });
     }
-    // create new user
-    //Password hashing happens automatically in the user model
+  
     const user = await User.create({ name, email, password });
-    const token = generateToken(user._id);
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    // Store refresh token in httpOnly cookie
+    setRefreshCookie(res, refreshToken);
 
     res.status(201).json({
       success: true,
       message: "Account created successfully",
-      token: token,
+      accessToken,
       user: {
         _id: user._id,
         name: user.name,
@@ -46,8 +63,9 @@ const register = async (req, res) => {
     });
   }
 };
-//  LOGIN -----
-// Route:  POST /api/auth/login
+
+// Login
+// Route: POST /api/auth/login
 // Access: Public
 const login = async (req, res) => {
   const errors = validationResult(req);
@@ -72,11 +90,17 @@ const login = async (req, res) => {
         message: "Invalid email or password",
       });
     }
-    const token = generateToken(user._id);
+
+    const accessToken = generateAccessToken(user._id);
+    const refreshToken = generateRefreshToken(user._id);
+
+    // Store refresh token in httpOnly cookie
+    setRefreshCookie(res, refreshToken);
+
     res.status(200).json({
       success: true,
       message: "Login successful",
-      token: token,
+      accessToken,
       user: {
         _id: user._id,
         name: user.name,
@@ -92,9 +116,64 @@ const login = async (req, res) => {
   }
 };
 
-// Get logged in user----
-// Route: GET/api/auth/me
-// Access:Private(requires token)
+// Refresh Access Token
+// Route: POST /api/auth/refresh
+// Access: Public (uses httpOnly cookie)
+const refresh = async (req, res) => {
+  const token = req.cookies.refreshToken;
+
+  if (!token) {
+    return res.status(401).json({
+      success: false,
+      message: "No refresh token - please log in again",
+    });
+  }
+
+  try {
+    const decoded = jwt.verify(token, process.env.REFRESH_TOKEN_SECRET);
+
+    // Confirm the user still exists
+    const user = await User.findById(decoded.id);
+    if (!user) {
+      return res.status(401).json({
+        success: false,
+        message: "User no longer exists",
+      });
+    }
+
+    // Issue a fresh access token
+    const accessToken = generateAccessToken(user._id);
+
+    res.status(200).json({
+      success: true,
+      accessToken,
+    });
+  } catch (err) {
+    return res.status(401).json({
+      success: false,
+      message: "Invalid or expired refresh token - please log in again",
+    });
+  }
+};
+
+// Logout
+// Route: POST /api/auth/logout
+// Access: Private
+const logout = (req, res) => {
+  res.clearCookie("refreshToken", {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === "production",
+    sameSite: "strict",
+  });
+  res.status(200).json({
+    success: true,
+    message: "Logged out successfully",
+  });
+};
+
+// Get logged in user
+// Route: GET /api/auth/me
+// Access: Private (requires access token)
 const getMe = async (req, res) => {
   const user = await User.findById(req.user._id);
   res.status(200).json({
@@ -109,4 +188,5 @@ const getMe = async (req, res) => {
     },
   });
 };
-module.exports = { register, login, getMe };
+
+module.exports = { register, login, refresh, logout, getMe };

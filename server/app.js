@@ -1,5 +1,6 @@
 const express = require("express");
 const cors = require("cors");
+const cookieParser = require("cookie-parser");
 const errorHandler = require("./middleware/errorMiddlewares");
 
 // create express app
@@ -18,6 +19,8 @@ app.use(
 app.use(express.json());
 // parse URL-encoded data
 app.use(express.urlencoded({ extended: false }));
+// parse cookies (needed for the httpOnly refreshToken cookie)
+app.use(cookieParser());
 
 // Health check
 app.get("/health", (req, res) => {

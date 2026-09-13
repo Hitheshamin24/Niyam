@@ -1,9 +1,15 @@
 const jwt = require("jsonwebtoken");
 
-const generateToken = (userId) => {
+const generateAccessToken = (userId) => {
   return jwt.sign({ id: userId }, process.env.JWT_SECRET, {
-    expiresIn: process.env.JWT_EXPIRE || "7d",
+    expiresIn: process.env.JWT_EXPIRE || "15m",
   });
 };
 
-module.exports = generateToken;
+const generateRefreshToken = (userId) => {
+  return jwt.sign({ id: userId }, process.env.REFRESH_TOKEN_SECRET, {
+    expiresIn: process.env.REFRESH_TOKEN_EXPIRE || "7d",
+  });
+};
+
+module.exports = { generateAccessToken, generateRefreshToken };

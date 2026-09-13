@@ -1,6 +1,6 @@
 const express = require("express");
 const { body } = require("express-validator");
-const { register, login, getMe } = require("../controllers/authController");
+const { register, login, refresh, logout, getMe } = require("../controllers/authController");
 const { protect } = require("../middleware/auth");
 const router = express.Router();
 
@@ -45,4 +45,11 @@ router.post("/login", loginValidation, login);
 
 // GET api/auth/me
 router.get("/me", protect, getMe);
+
+// POST api/auth/refresh - get a new access token using the refresh cookie
+router.post("/refresh", refresh);
+
+// POST api/auth/logout - clear the refresh token cookie
+router.post("/logout", logout);
+
 module.exports = router;
