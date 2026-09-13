@@ -78,7 +78,7 @@ export default function HabitsPage() {
       {/* Header Block with Search and Primary Action */}
       <div className="flex flex-col lg:flex-row lg:items-end justify-between gap-space-lg">
         <div className="flex flex-col min-w-0">
-          <div className="flex items-center gap-space-xs mb-1">
+          <div className="flex items-center gap-space-xs mb-1 pt-5">
             <span className="text-[11px] uppercase tracking-widest text-primary font-semibold">
               Architecture
             </span>
@@ -95,28 +95,7 @@ export default function HabitsPage() {
           </p>
         </div>
 
-        <div className="flex flex-wrap sm:flex-nowrap items-center gap-space-sm">
-          <div className="relative w-full sm:w-72">
-            <span className="material-symbols-outlined absolute left-3 top-1/2 -translate-y-1/2 text-secondary text-[20px] pointer-events-none">
-              search
-            </span>
-            <input
-              type="text"
-              placeholder="Search habits..."
-              value={searchQuery}
-              onChange={(e) => setSearchQuery(e.target.value)}
-              className="w-full h-10 pl-10 pr-4 rounded-lg bg-surface-container-lowest text-on-surface placeholder:text-secondary/70 text-[14px] shadow-sm focus:outline-none focus:ring-2 focus:ring-primary/20 transition-all border border-outline-variant/20"
-            />
-          </div>
-          <button
-            type="button"
-            onClick={openCreateModal}
-            className="inline-flex items-center justify-center gap-2 h-10 px-5 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-[14px] font-medium shadow-md shadow-primary/15 transition-all duration-200 active:scale-[0.98] whitespace-nowrap cursor-pointer"
-          >
-            <span className="material-symbols-outlined text-[20px]">add</span>
-            <span>New Habit</span>
-          </button>
-        </div>
+     
       </div>
 
       {/* Category & Frequency Filter Rail */}

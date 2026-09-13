@@ -27,8 +27,8 @@ export const AuthProvider = ({ children }) => {
             setUser(res.user);
             localStorage.setItem('niyam_user', JSON.stringify(res.user));
           }
-        } catch (error) {
-          console.warn('Session expired or invalid token:', error?.message);
+        } catch {
+          // getMe failed — apiClient will auto-refresh; if that also fails it redirects to /login
           localStorage.removeItem('niyam_token');
           localStorage.removeItem('niyam_user');
           setUser(null);
@@ -44,10 +44,11 @@ export const AuthProvider = ({ children }) => {
   const login = async (credentials) => {
     try {
       const data = await authApi.login(credentials);
-      if (data.token && data.user) {
-        localStorage.setItem('niyam_token', data.token);
+      // Server now returns `accessToken` (not `token`)
+      if (data.accessToken && data.user) {
+        localStorage.setItem('niyam_token', data.accessToken);
         localStorage.setItem('niyam_user', JSON.stringify(data.user));
-        setToken(data.token);
+        setToken(data.accessToken);
         setUser(data.user);
         toast.success(`Welcome back, ${data.user.name}!`);
         return { success: true };
@@ -63,10 +64,11 @@ export const AuthProvider = ({ children }) => {
   const register = async (userData) => {
     try {
       const data = await authApi.register(userData);
-      if (data.token && data.user) {
-        localStorage.setItem('niyam_token', data.token);
+      // Server now returns `accessToken` (not `token`)
+      if (data.accessToken && data.user) {
+        localStorage.setItem('niyam_token', data.accessToken);
         localStorage.setItem('niyam_user', JSON.stringify(data.user));
-        setToken(data.token);
+        setToken(data.accessToken);
         setUser(data.user);
         toast.success('Account created successfully! Welcome to Niyam.');
         return { success: true };
@@ -79,7 +81,12 @@ export const AuthProvider = ({ children }) => {
     }
   };
 
-  const logout = useCallback(() => {
+  const logout = useCallback(async () => {
+    try {
+      await authApi.logout(); // Clears the httpOnly refresh token cookie on the server
+    } catch {
+      // Best-effort — still clear local state even if request fails
+    }
     localStorage.removeItem('niyam_token');
     localStorage.removeItem('niyam_user');
     setToken(null);

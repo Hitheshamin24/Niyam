@@ -37,7 +37,7 @@ export default function DashboardPage() {
   return (
     <div className="flex flex-col w-full max-w-6xl mx-auto space-y-space-xl">
       {/* Top Greeting & Header Section */}
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-space-md  pt-5">
         <div className="space-y-space-xs">
           <div className="inline-flex items-center gap-2">
             <h1 className="text-[28px] sm:text-[32px] text-on-surface tracking-tight font-semibold">
@@ -48,18 +48,7 @@ export default function DashboardPage() {
             Here is your daily routine for today. Let's make it count.
           </p>
         </div>
-        <div className="flex items-center gap-space-sm self-start sm:self-auto">
-          <button
-            onClick={openCreateModal}
-            className="group inline-flex items-center gap-2 px-5 py-2.5 rounded-lg bg-primary hover:bg-primary-container text-on-primary text-[14px] font-medium shadow-sm transition-all duration-200 active:scale-[0.98] cursor-pointer"
-            type="button"
-          >
-            <span className="material-symbols-outlined text-[20px] transition-transform duration-200 group-hover:rotate-90">
-              add
-            </span>
-            <span>Add Habit</span>
-          </button>
-        </div>
+      
       </div>
 
       {/* Bento Grid: Main Emerald Progress Card + Editorial Quote */}

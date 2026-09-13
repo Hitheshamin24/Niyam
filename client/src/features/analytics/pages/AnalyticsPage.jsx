@@ -55,9 +55,9 @@ export default function AnalyticsPage() {
   return (
     <div className="flex flex-col w-full gap-space-xl">
       {/* Header Banner & Ambient Horizon */}
-      <section className="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm p-space-xl flex flex-col md:flex-row md:items-center justify-between gap-space-md border border-outline-variant/15">
+      <section className="relative overflow-hidden rounded-xl bg-surface-container-lowest shadow-sm p-space-xl flex flex-col md:flex-row md:items-center justify-between gap-space-md border border-outline-variant/15 mt-5">
         <div className="absolute -right-12 -top-12 w-64 h-64 rounded-full bg-primary/5 blur-3xl pointer-events-none" />
-        <div className="flex flex-col gap-space-xs relative z-10 max-w-2xl">
+        <div className="flex flex-col gap-space-xs relative z-10 max-w-2xl ">
           <div className="inline-flex items-center gap-2 px-2.5 py-1 rounded-full bg-surface-container-low text-primary w-fit">
             <span className="material-symbols-outlined text-[16px]">insights</span>
             <span className="text-[11px] uppercase tracking-wider font-semibold">

@@ -18,4 +18,16 @@ export const authApi = {
     const response = await apiClient.get('/auth/me');
     return response.data;
   },
+
+  // POST /api/auth/refresh — uses httpOnly cookie automatically
+  refresh: async () => {
+    const response = await apiClient.post('/auth/refresh');
+    return response.data;
+  },
+
+  // POST /api/auth/logout — clears the httpOnly cookie
+  logout: async () => {
+    const response = await apiClient.post('/auth/logout');
+    return response.data;
+  },
 };
